@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>紅綠燈倒數</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+
+    <h1>🚦 紅綠燈倒數</h1>
+    <h2 id="light">載入中...</h2>
+    <p id="time"></p>
+
+    <script>
+    function update() {
+        fetch('/data')
+        .then(res => res.json())
+        .then(data => {
+            let text = "";
+            if (data.light === "green") text = "🟢 綠燈";
+            if (data.light === "yellow") text = "🟡 黃燈";
+            if (data.light === "red") text = "🔴 紅燈";
+
+            document.getElementById("light").innerText = text;
+            document.getElementById("time").innerText = "剩餘 " + data.remain + " 秒";
+        });
+    }
+
+    setInterval(update, 1000);
+    update();
+    </script>
+
+</body>
+</html>
